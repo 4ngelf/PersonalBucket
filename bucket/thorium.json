@@ -1,0 +1,43 @@
+{
+    "##": "This is a direct copy from Extras/Thorium but without persisting",
+    "##": "'USER DATA' due to shortcuts' lack of integration with the rest of the system",
+    "version": "128.0.6613.189",
+    "description": "Chromium fork for Linux, Windows, MacOS, Android, and Raspberry Pi named after radioactive element No. 90.",
+    "homepage": "https://thorium.rocks/",
+    "license": {
+        "identifier": "BSD 3-Clause",
+        "url": "https://github.com/Alex313031/Thorium-Win/blob/main/LICENSE"
+    },
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/Alex313031/Thorium-Win/releases/download/M128.0.6613.189/Thorium_SSE3_128.0.6613.189.zip",
+            "hash": "16924c3d16c37213767f7f7148af56c03088d931b962dce2e13bc975af12662f"
+        }
+    },
+    "bin": [
+        [
+            "bin\\thorium.exe",
+            "thorium"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "bin\\thorium.exe",
+            "Thorium"
+        ]
+    ],
+    "env_set": {
+        "CHROME_EXECUTABLE": "$dir\\thorium.exe"
+    },
+    "checkver": {
+        "github": "https://github.com/Alex313031/Thorium-Win",
+        "regex": "/releases/tag/M(?<version>(?:\\d+\\.){3}\\d+)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/Alex313031/Thorium-Win/releases/download/M$version/Thorium_SSE3_$version.zip"
+            }
+        }
+    }
+}
