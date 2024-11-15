@@ -1,0 +1,56 @@
+{
+    "version": "5.1.5-6",
+    "description": "A powerful light-weight programming language designed for extending applications. Version 5.1.x (mingw-w64)",
+    "homepage": "https://www.lua.org",
+    "license": "MIT",
+    "architecture": {
+        "64bit": {
+            "url": "https://mirror.msys2.org/mingw/clang64/mingw-w64-clang-x86_64-lua51-5.1.5-6-any.pkg.tar.zst",
+            "hash": "c6085d986bc86b871e5e3ba7f1221dda933e9daea7a3906099784845ec18fb0b",
+            "extract_dir": "clang64"
+        },
+        "arm64": {
+            "url": "https://mirror.msys2.org/mingw/clangarm64/mingw-w64-clang-aarch64-lua51-5.1.5-6-any.pkg.tar.zst",
+            "hash": "48752de3058b84ad7da32ec6ada8d0ce2f2ca75b965b5cdadb40ede7bd3f01d2",
+            "extract_dir": "clangarm64"
+        }
+    },
+    "bin": [
+        [
+            "bin\\lua5.1.exe",
+            "lua51"
+        ],
+        [
+            "bin\\lua5.1.exe",
+            "lua"
+        ],
+        [
+            "bin\\luac5.1.exe",
+            "luac51"
+        ],
+        [
+            "bin\\luac5.1.exe",
+            "luac"
+        ]
+    ],
+    "env_set": {
+        "LUA_PATH": "$dir\\bin",
+        "LUA_CPATH": "$dir\\bin"
+    },
+    "checkver": {
+        "url": "https://packages.msys2.org/api/search?query=mingw-w64-clang-x86_64-lua51&qtype=binpkg",
+        "jsonpath": "$.results.exact.version"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://mirror.msys2.org/mingw/clang64/mingw-w64-clang-x86_64-lua51-$version-any.pkg.tar.zst",
+                "extract_dir": "clang64"
+            },
+            "arm64": {
+                "url": "https://mirror.msys2.org/mingw/clangarm64/mingw-w64-clang-aarch64-lua51-$version-any.pkg.tar.zst",
+                "extract_dir": "clangarm64"
+            }
+        }
+    }
+}
