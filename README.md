@@ -9,6 +9,7 @@ Install with:
 scoop bucket add personal https://github.com/4ngelf/PersonalBucket
 ```
 
-## Non portable apps
-
+## No portable Apps
+<!--LIST:NOPORTABLE:START-->
 - Thorium
+<!--LIST:NOPORTABLE:END-->
