@@ -39,13 +39,15 @@ jobs:
                 continue
 
               if not set(attrs).isdisjoint(criteria):
-                yield file.stem, manifest
+                yield file, manifest
 
           def insert_list(file, criteria):
-            for name, manifest in get_packages_by(criteria):
+            for file, manifest in get_packages_by(criteria):
+              name = file.stem
+              path = str(file)
               version = manifest.get("version", "")
               desc = manifest.get("description", "")
-              print(f"- __{name}__ <sup>(v{version}) {desc}</sup>", file=file)
+              print(f"- [__{name}__]({path}) <sup>(v{version}) {desc}</sup>", file=file)
 
           with README.open("rt") as f:
             previous_readme = iter(f.readlines())
