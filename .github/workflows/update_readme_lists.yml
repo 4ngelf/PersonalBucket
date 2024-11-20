@@ -55,7 +55,7 @@ jobs:
               match = re_start.match(line)
               if match:
                 # Reinsert the line for future updates
-                print(line, file=f)
+                f.write(line)
 
                 # Insert list with criteria
                 criteria = match.group(1).split(",")
@@ -64,11 +64,11 @@ jobs:
                 # Skip previous contents until END mark
                 for line in previous_readme:
                   if re_end.match(line):
-                    print(line, file=f)
+                    f.write(line)
                     break
               else:
                 # Keep previous contents
-                print(line, file=f)
+                f.write(line)
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
