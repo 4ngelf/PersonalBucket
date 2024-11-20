@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
-      - bucket/*
+      - bucket/*.json
       - README.md
 
 jobs:
@@ -31,22 +31,22 @@ jobs:
           def get_packages_by(criteria):
             for file in BUCKET.iterdir():
               with file.open("r") as f:
-                j = json.load(f)
+                manifest = json.load(f)
 
-              attrs = j.get("##", [])
+              attrs = manifest.get("##", [])
               if not isinstance(attrs, list):
+                # This isn't our custom attribute list
                 continue
 
               for attr in attrs:
                 if attr in criteria:
-                  yield j
+                  yield file.stem, manifest
 
           def insert_list(file, criteria):
-            for j in get_packages_by(criteria):
-              name = j.get("name", "")
-              version = j.get("version", "")
-              desc = j.get("description", "")
-              print(f"- {name} (v{version}) - {desc}", file=file)
+            for name, manifest in get_packages_by(criteria):
+              version = manifest.get("version", "")
+              desc = manifest.get("description", "")
+              print(f"- __{name}__ <sup>(v{version}) {desc}</sup>", file=file)
 
           def find_end(file, lines_it):
             for line in lines_it:
@@ -61,6 +61,9 @@ jobs:
             for line in readme_lines:
               match = re_start.match(line)
               if match:
+                # Reinsert the line for future updates
+                print(line, file=f)
+
                 # Insert list with criteria
                 criteria = match.group(1).split(",")
                 insert_list(f, criteria)
