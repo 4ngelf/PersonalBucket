@@ -1,0 +1,75 @@
+name: Update README.md lists
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - bucket/*
+      - README.md
+
+jobs:
+  update_readme:
+    name: Update README.md
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Update README
+        shell: python
+        run: |
+          import re, json
+          from pathlib import Path
+          
+          README = Path("README.md")
+          BUCKET = Path("bucket")
+          re_start = re.compile(r"^<!--LIST:(.*):START-->$")
+          re_end = re.compile(r"^<!--LIST:END-->$")
+          
+          def get_packages_by(criteria):
+            for file in BUCKET.listdir():
+              with file.open("r") as f:
+                j = json.load(f)
+              
+              attrs = j.get("##", [])
+              if not isinstance(attrs, list):
+                continue
+
+              for attr in attrs:
+                if attr in criteria:
+                  yield j
+
+          def insert_list(file, criteria):
+            for j in get_packages_by(criteria):
+              name = j.get("name", "")
+              version = j.get("version", "")
+              desc = j.get("description", "")
+              print(f"- {name} (v{version}) - {desc}", file=file)
+
+          def find_end(file, lines_it):
+            for line in lines_it:
+              if re_end.match(line):
+                print(line, file=file)
+                break
+
+          with README.open("rt") as f:
+            readme_lines = iter(f.readlines())
+            
+          with README.open("wt") as f:
+            for line in readme_lines:
+              match = re_start.match(line)
+              if match:
+                # Insert list with criteria
+                criteria = match.group(1).split(",")
+                insert_list(f, criteria)
+                find_end(file, readme_lines)
+              else:
+                # insert current line
+                f.write(line)
+      - name: Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'CI: Update README lists'
+        

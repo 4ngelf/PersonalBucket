@@ -12,4 +12,4 @@ scoop bucket add personal https://github.com/4ngelf/PersonalBucket
 ## No portable Apps
 <!--LIST:NOPORTABLE:START-->
 - Thorium
-<!--LIST:NOPORTABLE:END-->
+<!--LIST:END-->
