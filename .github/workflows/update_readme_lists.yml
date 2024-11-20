@@ -38,9 +38,8 @@ jobs:
                 # This isn't our custom attribute list
                 continue
 
-              for attr in attrs:
-                if attr in criteria:
-                  yield file.stem, manifest
+              if not set(attrs).isdisjoint(criteria):
+                yield file.stem, manifest
 
           def insert_list(file, criteria):
             for name, manifest in get_packages_by(criteria):
@@ -48,17 +47,11 @@ jobs:
               desc = manifest.get("description", "")
               print(f"- __{name}__ <sup>(v{version}) {desc}</sup>", file=file)
 
-          def find_end(file, lines_it):
-            for line in lines_it:
-              if re_end.match(line):
-                print(line, file=file)
-                break
-
           with README.open("rt") as f:
-            readme_lines = iter(f.readlines())
+            previous_readme = iter(f.readlines())
 
           with README.open("wt") as f:
-            for line in readme_lines:
+            for line in previous_readme:
               match = re_start.match(line)
               if match:
                 # Reinsert the line for future updates
@@ -67,10 +60,15 @@ jobs:
                 # Insert list with criteria
                 criteria = match.group(1).split(",")
                 insert_list(f, criteria)
-                find_end(f, readme_lines)
+
+                # Skip previous contents until END mark
+                for line in previous_readme:
+                  if re_end.match(line):
+                    print(line, file=f)
+                    break
               else:
-                # insert current line
-                f.write(line)
+                # Keep previous contents
+                print(line, file=f)
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
