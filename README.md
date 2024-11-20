@@ -1,7 +1,7 @@
 # Personal Bucket
 
 This is a bucket for my applications. I usually only add apps not found in the main repositories.
-Or apps with convinient configurations.
+Or just apps with custom configurations.
 
 Install with:
 
