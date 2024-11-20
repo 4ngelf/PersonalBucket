@@ -64,7 +64,7 @@ jobs:
                 # Insert list with criteria
                 criteria = match.group(1).split(",")
                 insert_list(f, criteria)
-                find_end(file, readme_lines)
+                find_end(f, readme_lines)
               else:
                 # insert current line
                 f.write(line)
