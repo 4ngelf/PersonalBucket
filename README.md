@@ -6,7 +6,7 @@ Or just apps with custom configurations.
 Install with:
 
 ```pwsh
-scoop bucket add personal https://github.com/4ngelf/PersonalBucket
+scoop bucket add personal "https://github.com/4ngelf/PersonalBucket"
 ```
 
 ## No portable Apps
