@@ -42,9 +42,9 @@ jobs:
                 yield file, manifest
 
           def insert_list(file, criteria):
-            for file, manifest in get_packages_by(criteria):
-              name = file.stem
-              path = str(file)
+            for path, manifest in get_packages_by(criteria):
+              name = path.stem
+              path = str(path)
               version = manifest.get("version", "")
               desc = manifest.get("description", "")
               print(f"- [__{name}__]({path}) <sup>(v{version}) {desc}</sup>", file=file)
