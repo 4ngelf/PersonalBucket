@@ -4,6 +4,9 @@
         "Starting thorium as a default program (Ex: by using the start command) makes Windows",
         "bypass the shortcut file and use the wrong 'USER DATA' directory."
     ],
+    "##": [
+        "Deprecated. Use 'Alex313031.Thorium' from winget instead."
+    ],
     "version": "128.0.6613.189",
     "description": "Chromium fork for Linux, Windows, MacOS, Android, and Raspberry Pi named after radioactive element No. 90.",
     "homepage": "https://thorium.rocks/",
