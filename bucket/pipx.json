@@ -11,11 +11,13 @@
     "bin": "pipx.bat",
     "pre_install": "Set-Content -Value '@python \"%~dp0pipx.pyz\" %*' -Path \"$dir\\pipx.bat\"",
     "persist": [
-        "pipx"
+        "pipx",
+        "shims"
     ],
+    "env_add_path": "shims",
     "env_set": {
         "PIPX_HOME": "$persist_dir\\pipx",
-        "PIPX_BIN_DIR": "$scoopdir\\shims",
+        "PIPX_BIN_DIR": "$persist_dir\\shims",
         "PYTHONUTF8": "1"
     },
     "checkver": {
