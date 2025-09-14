@@ -31,7 +31,7 @@
     "post_install": [
         "$portable_config = \"$dir\\portable_config\"",
         "if (Test-Path $portable_config) { (Get-Item $portable_config).Delete() }",
-        "New-Item $portable_config -Type Junction -Value \"$env:USERPROFILE\\.config\\mpv\""
+        "New-Item $portable_config -Type Junction -Value \"$env:USERPROFILE\\.config\\mpv\" | Out-Null"
     ],
     "checkver": {
         "sourceforge": "mpv-player-windows/release",
