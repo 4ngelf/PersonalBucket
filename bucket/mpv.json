@@ -29,11 +29,12 @@
         ]
     ],
     "post_install": [
-        "$config = \"$env:USERPROFILE\\.config\\mpv\"",
-        "if (-not (Test-Path $config)) { New-Item $config -Type Directory | Out-Null }",
+        "# Ensure config files point to XDG_CONFIG_HOME/mpv",
+        "$config = \"$env:XDG_CONFIG_HOME\\mpv\"",
         "$portable_config = \"$dir\\portable_config\"",
         "if (Test-Path $portable_config) { (Get-Item $portable_config).Delete() }",
-        "New-Item $portable_config -Type Junction -Value \"$env:USERPROFILE\\.config\\mpv\" | Out-Null"
+        "if (-not (Test-Path $config)) { New-Item $config -Type Directory | Out-Null }",
+        "New-Item $portable_config -Type Junction -Value $config | Out-Null"
     ],
     "checkver": {
         "sourceforge": "mpv-player-windows/release",
