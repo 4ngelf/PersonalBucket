@@ -25,5 +25,6 @@
     },
     "autoupdate": {
         "url": "https://github.com/pypa/pipx/releases/download/$version/pipx.pyz"
-    }
+    },
+    "##": ["CLI"]
 }
